@@ -18,7 +18,6 @@ $ source .venv/bin/activate
 
 Now you can check various apis on http://localhost:8000
 
-To run it on '127.0.0.1', you might be required to add this host in settings.py file ALLOWED_HOSTS = ['127.0.0.1'] or do ALLOWED_HOSTS = ['\*'] .
 
 ## Author
 
