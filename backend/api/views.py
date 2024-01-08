@@ -41,6 +41,7 @@ def user_list(request):
             user = User.objects.get(email=request.data['email'])
             user.set_password(request.data['password'])
             user.save()
+            # Create token from DRF Token
             token = Token.objects.create(user=user)
             return Response({"token": token.key, "user": serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -50,6 +51,13 @@ def user_list(request):
 @permission_classes([IsAuthenticated])
 def user_profile(request):
     try:
+
+        """
+        How Extraction of userID is Obtained from Token:
+        - After configuring DRF with token-based authentication,
+        - I'm accessing user ID from the the authenticated request as shown below
+        """
+        # Extract user ID from token to retrieve the user's profile
         id = request.user.id
         user = User.objects.get(pk=id)
     except User.DoesNotExist:
@@ -75,6 +83,14 @@ def user_login(request):
     serializer = UserSerializer(instance=user)
     return Response({"token": token.key, "user": serializer.data})
 
+# Admin route to fetch all admins from User model
+"""
+Logic Behind Custom Permission Implementation:
+- Imported my custom permission class from permissions.py
+  which checks if the authenticated user has admin privileges
+- Over here in views.py, I'm making use of the custom permission class to 
+  enforce the admin permission.
+"""
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated, IsAdminPermission])
