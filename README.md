@@ -9,7 +9,7 @@
 $ git clone https://github.com/Albert-Osei/django-rest-server.git
 $ cd django-rest-server
 $ vrtualenv -p python3.6 venv
-$ source .venv/bin/activate
+$ source venv/bin/activate
 <venv>$ pip install -r requirements.txt
 <venv>$ cd backend
 <venv>$ python manage.py runserver 8000
